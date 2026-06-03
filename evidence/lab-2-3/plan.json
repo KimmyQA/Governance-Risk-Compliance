@@ -9,7 +9,43 @@
           "type": "aws_s3_bucket",
           "name": "primary",
           "values": {
-            "bucket": "cgep-lab-dev-data"
+            "bucket": "cgep-lab-dev-data-1234abcd",
+            "tags": {
+              "Project": "cgep-lab",
+              "Environment": "dev",
+              "ManagedBy": "terraform",
+              "ComplianceScope": "cge-p-lab"
+            },
+            "logging": [
+              {
+                "target_bucket": "cgep-lab-dev-logs-1234abcd",
+                "target_prefix": "access-logs/"
+              }
+            ],
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "sse_algorithm": "AES256"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "address": "aws_s3_bucket_public_access_block.primary",
+          "type": "aws_s3_bucket_public_access_block",
+          "name": "primary",
+          "values": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "ignore_public_acls": true,
+            "restrict_public_buckets": true
           }
         }
       ]
